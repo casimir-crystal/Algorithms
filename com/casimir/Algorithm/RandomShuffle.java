@@ -1,17 +1,17 @@
 import java.util.Random;
 
 public class RandomShuffle {
-  private static void swap(int[] arr, int from, int to) {
-    int temp = arr[from];
+  private static <T> void swap(T[] arr, int from, int to) {
+    T temp = arr[from];
     arr[from] = arr[to];
     arr[to] = temp;
   }
 
-  public static void shuffle(int[] arr) {
+  public static <T> void shuffle(T[] arr) {
     shuffle(arr, arr.length-1);
   }
 
-  public static void shuffle(int[] arr, int index) {
+  public static <T> void shuffle(T[] arr, int index) {
     Random r = new Random();
 
     // array swap-shuffle

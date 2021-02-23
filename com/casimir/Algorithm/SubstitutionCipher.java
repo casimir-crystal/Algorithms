@@ -1,7 +1,7 @@
 public class SubstitutionCipher {
-  private final char[] cipherTable;
+  private final Character[] cipherTable;
 
-  SubstitutionCipher(char[] cipher) {
+  SubstitutionCipher(Character[] cipher) {
     cipherTable = cipher;
   }
 
@@ -9,7 +9,7 @@ public class SubstitutionCipher {
     char[] chars = text.toCharArray();
 
     for (int i=0; i < chars.length; i++) {
-      if (chars[i] == ' ') continue;  // ignore spaces
+      if (chars[i] < 'A' || chars[i] > 'Z') continue;  // ignore non-upper cases
       chars[i] = cipherTable[chars[i] - 'A'];  // replace every char
     }
 
@@ -20,7 +20,7 @@ public class SubstitutionCipher {
     char[] chars = text.toCharArray();
 
     for (int i=0; i < chars.length; i++) {
-      if (chars[i] == ' ') continue;  // ignore spaces
+      if (chars[i] < 'A' || chars[i] > 'Z') continue;  // ignore non-upper cases
 
       for (int j=0; j < cipherTable.length; j++) {
         if (chars[i] == cipherTable[j]) {

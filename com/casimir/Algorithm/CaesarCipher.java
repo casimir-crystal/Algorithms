@@ -1,6 +1,6 @@
 public class CaesarCipher extends SubstitutionCipher {
-  private static char[] createCipher() {
-    char[] cipher = new char[26];
+  private static Character[] createCipher() {
+    Character[] cipher = new Character[26];
     for (int i=0; i < 26; i++) {
       cipher[i] = (char) ((i + 3) % 26 + 'A');
     }

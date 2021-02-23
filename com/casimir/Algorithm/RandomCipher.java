@@ -1,25 +1,11 @@
-import java.util.Random;
-
 public class RandomCipher extends SubstitutionCipher {
-  private static void shuffleArray(char[] array) {
-    Random r = new Random();
-
-    for (int i=array.length - 1; i > 0; i--) {
-      int index = r.nextInt(i + 1);
-      // Simple swap
-      char a = array[index];
-      array[index] = array[i];
-      array[i] = a;
-    }
-  }
-
-  private static char[] createCipher() {
-    char[] cipher = new char[26];
+  private static Character[] createCipher() {
+    Character[] cipher = new Character[26];
 
     for (int i=0; i < 26; i++) {
       cipher[i] = (char) (i + 'A');
     }
-    shuffleArray(cipher);
+    RandomShuffle.shuffle(cipher);
 
     return cipher;
   }
