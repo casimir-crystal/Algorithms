@@ -98,19 +98,21 @@ public class SinglyLinkedList<E> {
     return null; // not find
   }
 
-  public static void printString(SinglyLinkedList<Integer> list) {
-    if (list.isEmpty()) return;
+  public String toString() {
+    if (this.isEmpty()) return "";
 
-    Node<Integer> node = list.getFirst();
-    System.out.print(node.getElement());
+    StringBuilder string = new StringBuilder();
+
+    Node node = this.getFirst();
+    string.append(node.getElement());
 
     while (node.getNext() != null) {
-      System.out.print(" -> ");
+      string.append(" -> ");
       node = node.getNext();
-      System.out.print(node.getElement());
+      string.append(node.getElement());
     }
 
-    System.out.print("\n\n");
+    return new String(string);
   }
 
   public void reverse() {
@@ -150,18 +152,21 @@ public class SinglyLinkedList<E> {
     }
 
     System.out.println("The origin list:");
-    SinglyLinkedList.printString(list);
+    System.out.println(list.toString());
+    System.out.println();
 
     System.out.println("Let's swap node 5 and 15: ");
     Node<Integer> x = list.findNodeByElement(5);
     Node<Integer> y = list.findNodeByElement(15);
     list.swapNode(x, y);
 
-    SinglyLinkedList.printString(list);
+    System.out.println(list.toString());
+    System.out.println();
 
     System.out.println("Let's reverse the list:");
     list.reverse();
 
-    SinglyLinkedList.printString(list);
+    System.out.println(list.toString());
+    System.out.println();
   }
 }
