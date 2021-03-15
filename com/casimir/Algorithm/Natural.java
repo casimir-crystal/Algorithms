@@ -1,18 +1,22 @@
 public abstract class Natural {
+  public Natural previous() {
+    return ((Succ) this).num;
+  }
+
   public static Natural multiply(Natural number, Natural times) {
-    if (times instanceof Succ) {
-      // `((Succ)times).num` is equal to `times--`
-      return add(number, multiply(number, ((Succ)times).previous()));
-    } else {
+    if (times.isZero()) {
       return new Zero();
+    } else {
+      // `((Succ)times).num` is equal to `times--`
+      return add(number, multiply(number, times.previous()));
     }
   }
 
   public static Natural add(Natural a, Natural b) {
-    if (b instanceof Succ) {
-      return new Succ(add(a, ((Succ)b).previous()));
-    } else {
+    if (b.isZero()) {
       return a;
+    } else {
+      return new Succ(add(a, b.previous()));
     }
   }
 
@@ -30,12 +34,11 @@ public abstract class Natural {
   public static int toInt(Natural n) {
     int val = 0;
 
-    while (n instanceof Succ) {
-      n = ((Succ)n).previous();
+    while (!n.isZero()) {
+      n = n.previous();
       val++;
     }
 
-    assert(n instanceof Zero);
     return val;
   }
 
@@ -53,12 +56,7 @@ public abstract class Natural {
 class Zero extends Natural {}
 
 class Succ extends Natural {
-  private final Natural num;
-
-  public Natural previous() {
-    return this.num;
-  }
-
+  public final Natural num;
   public Succ(Natural n) {
     this.num = n;
   }

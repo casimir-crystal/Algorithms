@@ -17,11 +17,11 @@ public class Integer_ {
       Natural bNum = b.n;
       // both sides minus one, until which equals to Zero
       while (!aNum.isZero() && !bNum.isZero()) {
-        aNum = ((Succ) aNum).previous();
-        bNum = ((Succ) bNum).previous();
+        aNum = aNum.previous();
+        bNum = bNum.previous();
       }
 
-      if (bNum.isZero()) {
+      if (!aNum.isZero()) {
         return new Integer_(a.isPositive, aNum);
       } else {
         return new Integer_(b.isPositive, bNum);
@@ -40,9 +40,9 @@ public class Integer_ {
 
     if (!int_.isPositive) {
       return -num;
+    } else {
+      return num;
     }
-
-    return num;
   }
 
   public static void main(String[] args) {
