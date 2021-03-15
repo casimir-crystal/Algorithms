@@ -7,8 +7,8 @@ public class Integer_ {
     this.isPositive = positive;
   }
 
-  //TODO: complete this method;
-  public static void multiply(Integer_ number, Integer_ times) {
+  public static Integer_ multiply(Integer_ a, Integer_ b) {
+    return new Integer_(a.isPositive == b.isPositive, Natural.multiply(a.n, b.n));
   }
 
   public static Integer_ add(Integer_ a, Integer_ b) {
@@ -16,12 +16,12 @@ public class Integer_ {
       Natural aNum = a.n;
       Natural bNum = b.n;
       // both sides minus one, until which equals to Zero
-      while (aNum instanceof Succ && bNum instanceof Succ) {
-        aNum = ((Succ) aNum).num;
-        bNum = ((Succ) bNum).num;
+      while (!aNum.isZero() && !bNum.isZero()) {
+        aNum = ((Succ) aNum).previous();
+        bNum = ((Succ) bNum).previous();
       }
 
-      if (aNum instanceof Succ) {
+      if (bNum.isZero()) {
         return new Integer_(a.isPositive, aNum);
       } else {
         return new Integer_(b.isPositive, bNum);
@@ -54,5 +54,14 @@ public class Integer_ {
     System.out.println(toInt(add(fromInt(-2), fromInt(10))));
     System.out.print("5 + 10 = ");
     System.out.println(toInt(add(fromInt(5), fromInt(10))));
+
+    System.out.print("3 * (-4) = ");
+    System.out.println(toInt(multiply(fromInt(3), fromInt(-4))));
+    System.out.print("(-2) * (-10) = ");
+    System.out.println(toInt(multiply(fromInt(-2), fromInt(-10))));
+    System.out.print("(-2) * 10 = ");
+    System.out.println(toInt(multiply(fromInt(-2), fromInt(10))));
+    System.out.print("5 * 10 = ");
+    System.out.println(toInt(multiply(fromInt(5), fromInt(10))));
   }
 }

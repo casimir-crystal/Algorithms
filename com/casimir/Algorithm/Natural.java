@@ -2,7 +2,7 @@ public abstract class Natural {
   public static Natural multiply(Natural number, Natural times) {
     if (times instanceof Succ) {
       // `((Succ)times).num` is equal to `times--`
-      return add(number, multiply(number, ((Succ)times).num));
+      return add(number, multiply(number, ((Succ)times).previous()));
     } else {
       return new Zero();
     }
@@ -10,7 +10,7 @@ public abstract class Natural {
 
   public static Natural add(Natural a, Natural b) {
     if (b instanceof Succ) {
-      return new Succ(add(a, ((Succ)b).num));
+      return new Succ(add(a, ((Succ)b).previous()));
     } else {
       return a;
     }
@@ -31,13 +31,18 @@ public abstract class Natural {
     int val = 0;
 
     while (n instanceof Succ) {
-      n = ((Succ)n).num;
+      n = ((Succ)n).previous();
       val++;
     }
 
     assert(n instanceof Zero);
     return val;
   }
+
+  public boolean isZero() {
+    return this instanceof Zero;
+  }
+
 
   public static void main(String[] args) {
     // for example, 3 * 4 outs 12
@@ -48,7 +53,11 @@ public abstract class Natural {
 class Zero extends Natural {}
 
 class Succ extends Natural {
-  public final Natural num;
+  private final Natural num;
+
+  public Natural previous() {
+    return this.num;
+  }
 
   public Succ(Natural n) {
     this.num = n;
