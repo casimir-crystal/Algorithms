@@ -1,60 +1,54 @@
-public abstract class Integer_ {
+public class Integer_ {
   public boolean isPositive = true;
+  public Natural n;
 
-  public static Integer_ multiply(Integer_ number, Integer_ times) {
-    if (times instanceof IntSucc) {
-      // `((IntSucc)times).num` is equal to `times--`
-      return add(number, multiply(number, ((IntSucc)times).num));
-    } else {
-      return new IntZero();
-    }
+  public Integer_(Natural nat) {
+    this.n = nat;
+  }
+  public Integer_() {
+    this.n = new Zero();
+  }
+
+  //TODO: complete this method;
+  public static void multiply(Integer_ number, Integer_ times) {
   }
 
   public static Integer_ add(Integer_ a, Integer_ b) {
-    if (b instanceof IntSucc) {
-      if (a.isPositive != b.isPositive) {
-        if (a instanceof IntSucc) {
-          return add(((IntSucc)a).num, ((IntSucc)b).num);
-        } else {
-          a.isPositive = !a.isPositive;
-        }
+    if (a.isPositive != b.isPositive) {
+      // both sides mine one, until which equals to Zero
+      while (a.n instanceof Succ && b.n instanceof Succ) {
+        a.n = ((Succ) a.n).num;
+        b.n = ((Succ) b.n).num;
       }
-      return new IntSucc(add(a, ((IntSucc)b).num));
+
+      return a.n instanceof Succ ? a : b;
     } else {
-      return a;
+      Integer_ result = new Integer_(Natural.add(a.n, b.n));
+      result.isPositive = a.isPositive;
+      return result;
     }
   }
 
   public static Integer_ fromInt(int n) {
-    Integer_ num = new IntZero();
+    Integer_ int_ = new Integer_();
     if (n < 0) {
-      num.isPositive = false;
-      n = -n; // abs(n)
+      int_.isPositive = false;
+      n = -n;
     }
 
-    while (n > 0) {
-      num = new IntSucc(num);
-      n--;
+    int_.n = Natural.fromInt(n);
+
+    return int_;
+  }
+
+  public static int toInt(Integer_ int_) {
+    int num = Natural.toInt(int_.n);
+
+    if (!int_.isPositive) {
+      num = -num;
     }
 
     return num;
-  }
-
-  public static int toInt(Integer_ n) {
-    int val = 0;
-
-    while (n instanceof IntSucc) {
-      n = ((IntSucc)n).num;
-      val++;
-    }
-
-    assert(n instanceof IntZero);
-
-    if (!n.isPositive) {
-      val = -val;
-    }
-
-    return val;
   }
 
   public static void main(String[] args) {
@@ -68,16 +62,3 @@ public abstract class Integer_ {
     System.out.println(toInt(add(fromInt(5), fromInt(10))));
   }
 }
-
-  class IntZero extends Integer_ {
-
-  }
-
-  class IntSucc extends Integer_ {
-    public final Integer_ num;
-
-    public IntSucc(Integer_ n) {
-      this.num = n;
-      this.isPositive = n.isPositive;
-    }
-  }
