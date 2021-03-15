@@ -39,7 +39,7 @@ public class Integer_ {
     int num = Natural.toInt(int_.n);
 
     if (!int_.isPositive) {
-      num = -num;
+      return -num;
     }
 
     return num;
