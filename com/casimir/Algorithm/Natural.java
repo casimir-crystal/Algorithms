@@ -7,7 +7,6 @@ public abstract class Natural {
     if (times.isZero()) {
       return new Zero();
     } else {
-      // `((Succ)times).num` is equal to `times--`
       return add(number, multiply(number, times.previous()));
     }
   }
@@ -46,6 +45,14 @@ public abstract class Natural {
     return this instanceof Zero;
   }
 
+  static class Zero extends Natural {}
+
+  static class Succ extends Natural {
+    public final Natural num;
+    public Succ(Natural n) {
+      this.num = n;
+    }
+  }
 
   public static void main(String[] args) {
     // for example, 3 * 4 outs 12
@@ -53,11 +60,3 @@ public abstract class Natural {
   }
 }
 
-class Zero extends Natural {}
-
-class Succ extends Natural {
-  public final Natural num;
-  public Succ(Natural n) {
-    this.num = n;
-  }
-}
