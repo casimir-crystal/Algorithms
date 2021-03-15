@@ -1,12 +1,10 @@
 public class Integer_ {
-  public boolean isPositive = true;
+  public boolean isPositive;
   public Natural n;
 
-  public Integer_(Natural nat) {
+  public Integer_(boolean positive, Natural nat) {
     this.n = nat;
-  }
-  public Integer_() {
-    this.n = new Zero();
+    this.isPositive = positive;
   }
 
   //TODO: complete this method;
@@ -15,30 +13,26 @@ public class Integer_ {
 
   public static Integer_ add(Integer_ a, Integer_ b) {
     if (a.isPositive != b.isPositive) {
-      // both sides mine one, until which equals to Zero
-      while (a.n instanceof Succ && b.n instanceof Succ) {
-        a.n = ((Succ) a.n).num;
-        b.n = ((Succ) b.n).num;
+      Natural aNum = a.n;
+      Natural bNum = b.n;
+      // both sides minus one, until which equals to Zero
+      while (aNum instanceof Succ && bNum instanceof Succ) {
+        aNum = ((Succ) aNum).num;
+        bNum = ((Succ) bNum).num;
       }
 
-      return a.n instanceof Succ ? a : b;
+      if (aNum instanceof Succ) {
+        return new Integer_(a.isPositive, aNum);
+      } else {
+        return new Integer_(b.isPositive, bNum);
+      }
     } else {
-      Integer_ result = new Integer_(Natural.add(a.n, b.n));
-      result.isPositive = a.isPositive;
-      return result;
+      return new Integer_(a.isPositive, Natural.add(a.n, b.n));
     }
   }
 
   public static Integer_ fromInt(int n) {
-    Integer_ int_ = new Integer_();
-    if (n < 0) {
-      int_.isPositive = false;
-      n = -n;
-    }
-
-    int_.n = Natural.fromInt(n);
-
-    return int_;
+    return new Integer_((n >= 0), Natural.fromInt(Math.abs(n)));
   }
 
   public static int toInt(Integer_ int_) {
