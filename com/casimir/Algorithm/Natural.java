@@ -30,22 +30,36 @@ public abstract class Natural {
     return num;
   }
 
-  public static int toInt(Natural n) {
-    int val = 0;
+  public boolean equals(Natural nat) {
+    Natural a = this;
+    Natural b = nat;
 
-    while (!n.isZero()) {
-      n = n.previous();
-      val++;
+    while (!a.isZero() && !b.isZero()) {
+      a = a.previous();
+      b = b.previous();
     }
 
-    return val;
+    return a.isZero() && b.isZero();
+  }
+
+  public int toInt(int n, Natural nat) {
+    if (nat.isZero()) {
+      return n;
+    } else {
+      return toInt(n+1, nat.previous());
+    }
+  }
+
+  public int toInt() {
+    return toInt(0, this);
   }
 
   public boolean isZero() {
     return this instanceof Zero;
   }
 
-  static class Zero extends Natural {}
+  static class Zero extends Natural {
+  }
 
   static class Succ extends Natural {
     public final Natural num;
@@ -56,7 +70,7 @@ public abstract class Natural {
 
   public static void main(String[] args) {
     // for example, 3 * 4 outs 12
-    System.out.println(toInt(multiply(fromInt(3), fromInt(4))));
+    System.out.println(multiply(fromInt(3), fromInt(4)).toInt());
   }
 }
 

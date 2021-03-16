@@ -36,7 +36,7 @@ public class Integer_ {
   }
 
   public static int toInt(Integer_ int_) {
-    int num = Natural.toInt(int_.n);
+    int num = int_.n.toInt();
     return int_.isPositive ? num : -num;
   }
 
