@@ -9,18 +9,35 @@ public class Rational {
   }
 
   public static Rational multiply(Rational a, Rational b) {
-    return new Rational(a.isPositive == b.isPositive, Natural.multiply(a.n, b.n), Natural.multiply(a.m, b.m));
+    return new Rational(a.isPositive == b.isPositive,
+      Natural.multiply(a.n, b.n),
+      Natural.multiply(a.m, b.m)
+    );
   }
 
   public static Rational add(Rational a, Rational b) {
-    if (a.m.equals(b.m)) {
-      return new Rational(a.isPositive == b.isPositive, Natural.add(a.n, b.n), a.m);
+    Rational result;
+
+    if (a.m.eq(b.m)) {
+      result = new Rational(a.isPositive == b.isPositive, Natural.add(a.n, b.n), a.m);
     } else {
-      return new Rational(a.isPositive == b.isPositive,
+      result = new Rational(a.isPositive == b.isPositive,
         Natural.add(Natural.multiply(a.n, b.m), Natural.multiply(b.n, a.m)),
         Natural.multiply(a.m, b.m)
       );
     }
+
+    Natural gcdNum = Natural.gcd(result.n, result.m);
+
+    // gcdNum != 1
+    while (!gcdNum.eq(new Natural.Succ(new Natural.Zero()))) {
+      result.n = Natural.divide(result.n, gcdNum);
+      result.m = Natural.divide(result.m, gcdNum);
+
+      gcdNum = Natural.gcd(result.n, result.m);
+    }
+
+    return result;
   }
 
   public String toString() {
