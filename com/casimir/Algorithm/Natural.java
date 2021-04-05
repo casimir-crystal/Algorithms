@@ -85,6 +85,11 @@ public abstract class Natural {
     return this instanceof Zero;
   }
 
+  public boolean greaterThan(Natural nat) {
+    // return not(a - b <= 0);
+    return !(subtract(this, nat).eq(new Zero()));
+  }
+
   public boolean eq(Natural nat) {
     Natural a = this;
     Natural b = nat;
